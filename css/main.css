@@ -1,0 +1,305 @@
+
+/*-- -------------------------- -->
+<---          header            -->
+<--- -------------------------- -*/
+/* Mobile */
+@media only screen and (min-width: 0rem) {
+	#header {
+		padding: 5rem 1rem 0;
+		text-align: center;
+	}
+	#header .cs-container {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+	#header .searchGroup {
+		display: flex;
+		width: 100%;
+	}
+	
+	#header .inputWithIcon {
+		position: relative;
+		flex: 9.5;
+		/* Takes up 90% of the width */
+	}
+	
+	#header .inputWithIcon input {
+		width: 100%;
+		padding: 1rem;
+		border: 2px solid var(--secondaryLight);
+		border-radius: .5rem;
+		box-sizing: border-box;
+		/* Ensures padding and border are included in width */
+		font-size: 16px;
+		/* Adjust font size as needed */
+		transition: .3s ease;
+	}
+
+	#header .inputWithIcon input:focus {
+		outline: none;
+		border: 1px solid var(--primary);
+		/* Example color for border when focused */
+		box-shadow: 0 0 1px var(--primary);
+	}
+	
+	#header .searchIcon {
+		position: absolute;
+		top: 50%;
+		left: 10px;
+		transform: translateY(-50%);
+		color: var(--secondary);
+	}
+	
+	#header .caughtPokemon {
+		flex: .5;
+		/* Takes up 10% of the width */
+		margin-left: 5px;
+		/* Creates space between the search bar and button */
+		padding: 10px 20px;
+		background-color: var(--secondaryLight);
+		color: var(--secondary);
+		border: none;
+		border-radius: .5rem;
+		/* Rounded corners on the right */
+		cursor: pointer;
+		transition: .3s ease;
+	}
+
+	#header .caughtPokemon:hover, .caughtPokemon:focus, .caughtPokemonActive {
+		outline: none;
+		background-color: var(--primary);
+		color: #fff;
+		box-shadow: 0 0 10px var(--primary);
+	}
+}
+/* Tablet 768p */
+@media only screen and (min-width: 48rem) {
+	#header {
+		padding: 5rem 10rem 0;
+	}
+}
+
+
+
+
+
+/*-- -------------------------- -->
+<---          pokemon grid      -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+	#pokemonGrid {
+		padding: var(--sectionPadding);
+	}
+	#pokemonGrid .cs-container {
+		width: 100%;
+		max-width: 36.5rem;
+		margin: auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: clamp(3rem, 6vw, 4rem);
+	}
+	#pokemonGrid .cs-content {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		/* centers content horizontally, set to flex-start to left align */
+		align-items: center;
+		/* set text align to left if content needs to be left aligned */
+		text-align: center;
+		gap: 1rem;
+	}
+	#pokemonGrid .cs-title {
+		max-width: 160px;
+	}
+	#pokemonGrid .cs-card-group {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		/* 16px - 20px */
+		gap: clamp(1rem, 2.5vw, 1.25rem);
+	}
+	#pokemonGrid .cs-item {
+		list-style: none;
+		width: 100%;
+		height: fit-content;
+		margin: 0;
+		box-sizing: border-box;
+		padding: 0;
+		background-color: #58ABF6;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		overflow: hidden;
+		/* Ensure overflow is hidden to manage image height */
+		grid-column: span 1;
+		z-index: 1;
+		border-radius: 20px;
+	}
+	#pokemonGrid .cs-picture {
+		transition: .3s ease;
+	}
+	#pokemonGrid .pokemonId {
+		color: #fff;
+	}
+	#pokemonGrid .cs-link {
+		text-decoration: none;
+		width: 100%;
+		box-sizing: border-box;
+		/* 20px - 32px */
+		padding: 1rem;
+		/* we use flexbox here to grow the link to fit the whole item, making it clickable everywhere, no matter the size */
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		position: relative;
+		z-index: 1;
+	}
+	#pokemonGrid .cs-h3 {
+		/* 20px - 25px */
+		font-size: clamp(1.25rem, 1.8vw, 1.5625rem);
+		line-height: 1.2em;
+		font-weight: bold;
+		margin: 0 0 0.25rem 0;
+		color: var(--bodyTextColorWhite);
+		transition: color 0.3s;
+		text-align: inherit;
+	}
+	#pokemonGrid .pokemonTypeContainer {
+		display: flex;
+		gap: .5rem;
+		flex-wrap: wrap;
+	}
+	#pokemonGrid .pokemonType {
+		font-size: .6rem;
+		color: var(--secondary);
+		display: flex;
+		align-items: center;
+		gap: .5rem;
+		width: min-content;
+		background: #fff;
+		padding: .5rem;
+		border-radius: 5px;
+	}
+	#pokemonGrid .pokemonType p {
+		margin: 0;
+		padding: 0;
+	}
+	#pokemonGrid .cs-picture {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		display: block;
+		position: relative;
+		top: 0;
+		left: 0;
+		z-index: -1;
+	}
+	#pokemonGrid .cs-picture img {
+		z-index: -1;
+		object-position: center;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		transition: transform 0.65s;
+		padding: 1rem;
+	}
+	#pokemonGrid .cs-arrow {
+		width: 100%;
+		height: auto;
+		opacity: 0;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		transition:
+			bottom 0.3s,
+			opacity 0.3s,
+			transform 0.3s;
+	}
+	#pokemonGrid .fa-circle-check {
+		position: absolute;
+		top: 20px;
+		right: 10px;
+		z-index: 2;
+		/* Ensure icon appears above the picture */
+		color: #fff
+	}
+
+	#pokemonGrid .fa-circle-checkActive {
+		color: var(--primary);
+	}
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+	#pokemonGrid .cs-card-group {
+		grid-template-columns: repeat(4, 1fr);
+	}
+	#pokemonGrid .cs-container {
+		max-width: 70rem;
+		
+	}
+
+}
+
+/* Desktop - 900px */
+@media only screen and (min-width: 56.25rem) {
+	#pokemonGrid .cs-card-group {
+		grid-template-columns: repeat(5, 1fr);
+	}
+	#pokemonGrid .cs-container {
+		max-width: 100rem;
+	}
+
+	#pokemonGrid .cs-item::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.6);
+		backdrop-filter: blur(10px);
+		opacity: 0;
+		transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		/* Adjust the cubic-bezier values for a smoother transition */
+	}
+
+	#pokemonGrid .cs-item:hover::before {
+		opacity: 1;
+	}
+
+	.pokemonCard {
+		z-index: 999;
+	} 
+}
+
+/*-- -------------------------- -->
+<---      Load more button      -->
+<--- -------------------------- -*/
+#loadMore {
+	display: block;
+	margin: 0 auto;
+	padding: 1rem 4rem;
+	margin-top: 50px;
+	background-color: var(--secondaryLight);
+	color: var(--secondary);
+	border: none;
+	border-radius: 10px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: 0.3s ease;
+}
+
+#loadMore:hover {
+	background-color: var(--primary);
+	color: var(--bodyTextColorWhite);
+	box-shadow: 0 0 10px var(--primary);
+}
