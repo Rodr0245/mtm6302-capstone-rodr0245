@@ -50,7 +50,7 @@
 		color: var(--secondary);
 	}
 	
-	#header .caughtPokemon {
+	#header .caughtPokemonUi {
 		flex: .5;
 		/* Takes up 10% of the width */
 		margin-left: 5px;
@@ -65,7 +65,7 @@
 		transition: .3s ease;
 	}
 
-	#header .caughtPokemon:hover, .caughtPokemon:focus, .caughtPokemonActive {
+	#header .caughtPokemonUi:hover, .caughtPokemonUi:focus, .caughtPokemonUiActive {
 		outline: none;
 		background-color: var(--primary);
 		color: #fff;
@@ -78,7 +78,6 @@
 		padding: 5rem 10rem 0;
 	}
 }
-
 
 
 
@@ -120,7 +119,7 @@
 		margin: 0;
 		padding: 0;
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(1, 1fr);
 		/* 16px - 20px */
 		gap: clamp(1rem, 2.5vw, 1.25rem);
 	}
@@ -131,7 +130,6 @@
 		margin: 0;
 		box-sizing: border-box;
 		padding: 0;
-		background-color: #58ABF6;
 		display: flex;
 		flex-direction: column;
 		position: relative;
@@ -140,6 +138,8 @@
 		grid-column: span 1;
 		z-index: 1;
 		border-radius: 20px;
+		cursor: pointer;
+
 	}
 	#pokemonGrid .cs-picture {
 		transition: .3s ease;
@@ -162,7 +162,7 @@
 	}
 	#pokemonGrid .cs-h3 {
 		/* 20px - 25px */
-		font-size: clamp(1.25rem, 1.8vw, 1.5625rem);
+		font-size: 3rem;
 		line-height: 1.2em;
 		font-weight: bold;
 		margin: 0 0 0.25rem 0;
@@ -176,7 +176,7 @@
 		flex-wrap: wrap;
 	}
 	#pokemonGrid .pokemonType {
-		font-size: .6rem;
+		font-size: .9rem;
 		color: var(--secondary);
 		display: flex;
 		align-items: center;
@@ -184,11 +184,33 @@
 		width: min-content;
 		background: #fff;
 		padding: .5rem;
+		padding-right: 1rem;
 		border-radius: 5px;
+		transition: .3s ease;
+
 	}
 	#pokemonGrid .pokemonType p {
 		margin: 0;
 		padding: 0;
+		font-weight: bold;
+	}
+
+	.type-icon {
+		width: 15px;
+		/* Adjust width as needed */
+		height: 15px;
+		/* Adjust height as needed */
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 2px;		
+	}
+	
+
+	/* Ensure the images fit within the container */
+	.type-icon img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
 	}
 	#pokemonGrid .cs-picture {
 		width: 100%;
@@ -237,20 +259,38 @@
 	}
 }
 
+/* Bigger mobile - 500px */
+@media only screen and (min-width: 30rem) {
+	#pokemonGrid .cs-card-group {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	#pokemonGrid .pokemonType {
+		font-size: .8rem;
+	}
+		#pokemonGrid .cs-h3 {
+			font-size: 2.5rem;
+		}
+}
+
 /* Tablet - 768px */
 @media only screen and (min-width: 48rem) {
 	#pokemonGrid .cs-card-group {
 		grid-template-columns: repeat(4, 1fr);
 	}
 	#pokemonGrid .cs-container {
-		max-width: 70rem;
-		
+		max-width: 70rem;	
+	}
+	#pokemonGrid .pokemonType {
+		font-size: .6rem;
+	}
+	#pokemonGrid .cs-h3 {
+		font-size: 2rem;
 	}
 
 }
 
 /* Desktop - 900px */
-@media only screen and (min-width: 56.25rem) {
+@media only screen and (min-width: 60.25rem) {
 	#pokemonGrid .cs-card-group {
 		grid-template-columns: repeat(5, 1fr);
 	}
@@ -268,7 +308,7 @@
 		background-color: rgba(0, 0, 0, 0.6);
 		backdrop-filter: blur(10px);
 		opacity: 0;
-		transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		transition: opacity 0.3s cubic-bezier(0.4, 0, 0.0001, 1);
 		/* Adjust the cubic-bezier values for a smoother transition */
 	}
 
@@ -277,10 +317,262 @@
 	}
 
 	.pokemonCard {
-		z-index: 999;
+		z-index: 998;
 	} 
+
+	#pokemonGrid .pokemonType {
+		font-size: .8rem;
+	}
+
+	#pokemonGrid .cs-h3 {
+		font-size: 2.5rem;
+	}
 }
 
+
+
+/*-- -------------------------- -------------------------- -------------------------- -->
+<---          pokemon overlay (specific pokemon information)      -->
+<--- -------------------------- -------------------------- -------------------------- -*/
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	display: flex;
+	visibility: hidden;
+	opacity: 0;
+	transition: .3s ease-in-out;
+	/* justify-content: center;
+	align-items: center; */
+	z-index: 998;
+}
+
+.overlay-content {
+	background-color: white;
+	border-radius: 20px;
+	width: 100%;
+	margin-top: 2rem;
+	transition: 0.2s ease-in-out;
+	transform: translateY(100%);
+	visibility: hidden;
+	opacity: 0;
+}
+
+.close-button {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	font-size: 20px;
+	color: rgb(24, 24, 24);
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.catch-btn {
+	margin-top: 1rem;
+	padding: 1rem 4rem;
+	background-color: #fff;
+	color: var(--secondary);
+	border: none;
+	border-radius: 10px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: 0.3s ease;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.catch-btn:hover {
+	background-color: var(--primary);
+	color: var(--bodyTextColorWhite);
+	box-shadow: 0 0 10px var(--primary);
+}
+
+/* overlay pokemon details */
+.overlayDetails {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	justify-content: center;
+	gap:2rem;
+	padding: 20px;
+}
+
+#overlayText p, 
+#overlayText h2 {
+	margin:0;
+	margin-bottom: 5px;
+}
+
+#overlay #overlay-id {
+	/* Ready for changes */
+	color: var(--secondary)
+}
+
+#overlay #overlay-title {
+	font-size: 2.2rem;
+	color: rgb(24, 24, 24);
+}
+/* overlay pokemon image */
+#overlay-image {
+	width: 120px;
+	height: 200px;
+	object-fit: contain;
+}
+
+/* overlay pokemon types */
+.overlayPokemonTypeContainer {
+	display: flex;
+	gap: .5rem;
+	flex-wrap: wrap;
+}
+.overlayPokemonType {
+	font-size: .7rem;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	gap: .5rem;
+	width: min-content;
+	padding: .5rem;
+	padding-right: 1rem;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.overlayPokemonType p {
+	margin: 0 !important;
+	padding: 0;
+	font-weight: bold;
+}
+
+
+/* overlay about */
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem){
+	.overlayAbout {
+		height: 100vh;
+		padding: 2rem;
+		border-radius: 20px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		color: #fff;
+	}
+
+	.overlayAbout h2,
+	.overlayAbout #overlay-description {
+		text-align: center;
+		margin: 0 !important;
+		padding-bottom: .5rem;
+	}
+
+	.overlayAbout h2 {
+		font-size: 2rem;
+	}
+
+	.overlayStatLabel,
+	.overlayStatValue {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	.overlayStatLabel {
+		font-weight: bold;
+		font-size: 1.1rem;
+	}
+
+	.overlayStat {
+		display: flex;
+		align-items: start;
+		gap: 1rem;
+		padding: 1rem 0;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+	}
+
+	.overlay-catch-btn-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 1rem;
+	}
+}
+
+/* Desktop - 900px */
+@media only screen and (min-width: 65rem) {
+	.overlay-content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+	.overlayAbout {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 15rem 5rem;
+		text-align: center;
+	}
+
+	.overlayStats {
+		border: solid 1px rgba(255, 255, 255, 0.3);
+		border-radius: 20px;
+		padding: 1rem;
+		margin-top: 3rem
+	}
+	.overlay-catch-btn-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 0;
+	}
+
+	.overlayAbout h2 {
+		font-size: 5rem;
+		padding-bottom: 1.2rem;
+	}
+
+	.overlayAbout #overlay-description {
+		font-size: 1.2rem;
+		line-height: 1.5;
+	}
+	.catchButton {
+		left: 75%;
+		margin-bottom: 8rem;
+	}
+
+	.overlayDetails {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 0 5rem;
+	}
+
+	#overlay-image {
+		width: 600px;
+		height: 600px;
+		object-fit: contain;
+	}
+
+	#overlayText {
+		width: 100%;
+		border-bottom: solid 1px rgba(26, 25, 25, 0.2);
+		z-index: 999;
+		border-radius: 20px;
+		padding: 1rem 2rem;
+	}
+	.close-button {
+		font-size: 2.5rem;
+	}
+	.largeOverlayTitle {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.overlayPokemonType {
+		font-size: 1rem;
+	}
+
+}
 /*-- -------------------------- -->
 <---      Load more button      -->
 <--- -------------------------- -*/
@@ -302,4 +594,67 @@
 	background-color: var(--primary);
 	color: var(--bodyTextColorWhite);
 	box-shadow: 0 0 10px var(--primary);
+}
+
+/*-- -------------------------- -->
+<---      Type Icons colors     -->
+<--- -------------------------- -*/
+@media (min-width: 0) {
+		/* Normal */
+
+		.defaultTypeIcon {
+			filter: invert(100%);
+		}
+
+		.pokemonTypeIcon {
+			filter: invert(100%) brightness(10%) contrast(10%);
+			
+		}
+	}
+
+/*-- -------------------------- -->
+<---          Notification            -->
+<--- -------------------------- -*/
+/* Mobile */
+@media only screen and (min-width: 0rem) {
+	#notification {
+		position: fixed;
+		bottom: 20px;
+		padding: 1rem 4rem;
+		background-color: var(--primary);
+		color: var(--bodyTextColorWhite);
+		border: none;
+		border-radius: 10px;
+		font-size: 1rem;
+		cursor: pointer;
+		transition: 0.3s ease;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		visibility: hidden;
+		opacity: 0;
+		z-index: 999999;
+		width: 100%;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
+	}
+
+	#notification.show {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	#notification-close {
+		cursor: pointer;
+		color: #ff4d4d;
+		float: right;
+	}
+	/* Desktop - 900px */
+	@media only screen and (min-width: 60.25rem) {
+		#notification {
+			right: 20px;
+			width: 500px;
+			font-weight: bold;
+		}
+	}
+
 }

@@ -18,7 +18,7 @@
 					<input type="text" name="search" id="search">
 					<span class="searchIcon"><i class="fas fa-search"></i></span>
 				</div>
-				<button class="caughtPokemon"><i class="fa-regular fa-circle-check fa-lg"></i></button>
+				<button class="caughtPokemonUi"><i class="fa-regular fa-circle-check fa-lg"></i></button>
 			</div>
 		</div>
 	</section>
@@ -26,153 +26,63 @@
 <!--                  pokemon grid                    -->
 <!-- ============================================ -->
 <section id="pokemonGrid">
-    <div class="cs-container">
-        <ul class="cs-card-group">
-            <li class="cs-item">
-							<a href="pokemon.html" class="pokemonCard">
-								<i class="fa-regular fa-circle-check fa-lg"></i>
-								<picture class="cs-picture">
-									<source media="(max-width: 600px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<source media="(min-width: 601px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<img decoding="async"
-													src="https://lorempokemon.fakerapi.it/pokemon"
-													alt="Pokemon Image" width="413" height="374" aria-hidden="true">
-								</picture>
-								<a href="" class="cs-link">
-									<span class="pokemonId">001</span>
-									<h3 class="cs-h3">Pokemon</h3>
-									<div class="pokemonTypeContainer">
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-									</div>
-								</a>
-							</a>
-            </li>
-            <li class="cs-item">
-							<a href="#" class="pokemonCard">
-								<i class="fa-regular fa-circle-check fa-lg"></i>
-								<picture class="cs-picture">
-									<source media="(max-width: 600px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<source media="(min-width: 601px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<img decoding="async"
-													src="https://lorempokemon.fakerapi.it/pokemon"
-													alt="Pokemon Image" width="413" height="374" aria-hidden="true">
-								</picture>
-								<a href="#" class="cs-link">
-									<span class="pokemonId">01</span>
-									<h3 class="cs-h3">Pokemon</h3>
-									<div class="pokemonTypeContainer">
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-									</div>
-								</a>
-							</a>
-            </li>
-            <li class="cs-item">
-							<a href="#" class="pokemonCard">
-								<i class="fa-regular fa-circle-check fa-lg"></i>
-								<picture class="cs-picture">
-									<source media="(max-width: 600px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<source media="(min-width: 601px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<img decoding="async"
-													src="https://lorempokemon.fakerapi.it/pokemon"
-													alt="Pokemon Image" width="413" height="374" aria-hidden="true">
-								</picture>
-								<a href="#" class="cs-link">
-									<span class="pokemonId">01</span>
-									<h3 class="cs-h3">Pokemon</h3>
-									<div class="pokemonTypeContainer">
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-									</div>
-								</a>
-							</a>
-            </li>
-            <li class="cs-item">
-							<a href="#" class="pokemonCard">
-								<i class="fa-regular fa-circle-check fa-lg"></i>
-								<picture class="cs-picture">
-									<source media="(max-width: 600px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<source media="(min-width: 601px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<img decoding="async"
-													src="https://lorempokemon.fakerapi.it/pokemon"
-													alt="Pokemon Image" width="413" height="374" aria-hidden="true">
-								</picture>
-								<a href="#" class="cs-link">
-									<span class="pokemonId">01</span>
-									<h3 class="cs-h3">Pokemon</h3>
-									<div class="pokemonTypeContainer">
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-									</div>
-								</a>
-							</a>
-            </li>
-            <li class="cs-item">
-							<a href="#" class="pokemonCard">
-								<i class="fa-regular fa-circle-check fa-lg"></i>
-								<picture class="cs-picture">
-									<source media="(max-width: 600px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<source media="(min-width: 601px)"
-													srcset="https://lorempokemon.fakerapi.it/pokemon">
-									<img decoding="async"
-													src="https://lorempokemon.fakerapi.it/pokemon"
-													alt="Pokemon Image" width="413" height="374" aria-hidden="true">
-								</picture>
-								<a href="#" class="cs-link">
-									<span class="pokemonId">01</span>
-									<h3 class="cs-h3">Pokemon</h3>
-									<div class="pokemonTypeContainer">
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-										<div class="pokemonType">
-											<i class="fa-regular fa-image"></i>
-											<p>Type</p>
-										</div>
-									</div>
-								</a>
-							</a>
-            </li>
-        </ul>
-    </div>
+	<div class="cs-container">
+		<ul class="cs-card-group"></ul>
+	</div>
+	<div id="overlay" class="overlay">
+  	<div class="overlay-content">
+			<div class="overlayDetails">
+				<div id="overlayText">
+					<p id="overlay-id"></p>
+					<div class="largeOverlayTitle">
+						<h2 id="overlay-title"></h2>
+						<div id="overlay-types"></div>
+					</div>
+				</div>
+				<img id="overlay-image" src="" alt="">
+			</div>		
+			<div class="overlayAbout">
+				<h2>About <span class="overlayPokemonName"></span></h2>
+				<p id="overlay-description"></p>
+				<div class="overlayStats">
+					<h3>Pokedex Stats</h3>
+					<div class="overlayStat">
+						<p class="overlayStatLabel">Height:</p>
+						<p class="overlayStatValue" id="overlay-height"></p>
+					</div>
+					<div class="overlayStat">
+						<p class="overlayStatLabel">Weight:</p>
+						<p class="overlayStatValue" id="overlay-weight"></p>
+					</div>
+					<div class="overlayStat">
+						<p class="overlayStatLabel">Abilities:</p>
+						<p class="overlayStatValue" id="overlay-abilities"></p>
+					</div>
+					<div class="overlayStat">
+						<p class="overlayStatLabel">Weaknesses:</p>
+						<p class="overlayStatValue" id="overlay-weaknesses"></p>
+					</div>
+					<div class="overlay-catch-btn-container">
+						<button id="overlay-catch-btn" class="catch-btn"></button>
+					</div>
+				</div>
+			</div>
+			<div class="buttonGroup">
+				<button class="close-button"><i class="fa-solid fa-arrow-left"></i></button>
+			</div>
+  </div>
+</div>
+</div>
 	<button id="loadMore">Load More</button>                            
 </section>
+<div id="notification">
+	<span id="notification-message"></span>
+	<span id="notification-close"><i class=""></i></span>
+</div>
 <!-- script to hide search icon when search bar is active -->
-<script src="javascript/main.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
+
+
+            
