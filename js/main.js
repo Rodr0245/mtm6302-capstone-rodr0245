@@ -362,61 +362,85 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
+
+
+
   // Gets the button with class caughtPokemonUi
 const caughtPokemonButton = document.querySelector('.caughtPokemonUi');
 
-let showingCaughtPokemon = false;
-let originalPokemonGridHTML;
-
+// event listener for the button
 caughtPokemonButton.addEventListener('click', () => {
-  const pokemonGrid = document.querySelector('.cs-card-group');
-  let caughtPokemonGrid = document.querySelector('.caught-pokemon-grid');
-
-  if (showingCaughtPokemon) {
-    // Restores the original grid content
-    pokemonGrid.innerHTML = originalPokemonGridHTML;
-    pokemonGrid.style.display = 'grid';
-    if (caughtPokemonGrid) caughtPokemonGrid.remove();
-    showingCaughtPokemon = false;
+  const pokemonToggleGrid = document.getElementById('pokemonGrid');
+  if (pokemonToggleGrid.style.visibility !== 'hidden') {
+    pokemonToggleGrid.style.visibility = 'hidden';
+    caughtPokemonButton.classList.add('buttonActive');
   } else {
-    // Saves the current pokemonGrid HTML only the first time the button is clicked
-    if (!originalPokemonGridHTML) {
-      originalPokemonGridHTML = pokemonGrid.innerHTML;
-    }
-
-    // Hides the current pokemonGrid
-    pokemonGrid.style.display = 'none';
-
-    // Creates a new pokemonGrid with only the caught pokemons
-    caughtPokemonGrid = document.createElement('div');
-    caughtPokemonGrid.classList.add('cs-card-group', 'caught-pokemon-grid');
-
-    // Loops through the caughtPokemon array and create a new pokemon card for each one
-    caughtPokemon.forEach((pokemon) => {
-      const pokemonCard = document.createElement('li');
-      pokemonCard.classList.add('cs-item', 'caught-pokemon');
-
-      // Adds the pokemon name and image to the card
-      const pokemonName = document.createElement('h3');
-      pokemonName.classList.add('cs-h3');
-      pokemonName.textContent = pokemon.name;
-      pokemonCard.appendChild(pokemonName);
-
-      const pokemonImage = document.createElement('img');
-      pokemonImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
-      pokemonCard.appendChild(pokemonImage);
-
-      caughtPokemonGrid.appendChild(pokemonCard);
-    });
-
-    // Adds the new pokemonGrid to the page
-    document.querySelector('.cs-container').appendChild(caughtPokemonGrid);
-
-    // Shows the caught pokemon grid
-    caughtPokemonGrid.style.display = 'grid';
-    showingCaughtPokemon = true;
+    pokemonToggleGrid.style.visibility = 'visible';
+    caughtPokemonButton.classList.remove('buttonActive');
   }
 });
+
+
+// let showingCaughtPokemon = false;
+// let originalPokemonGridHTML;
+
+// caughtPokemonButton.addEventListener('click', () => {
+//   const pokemonGrid = document.querySelector('.cs-card-group');
+//   let caughtPokemonGrid = document.querySelector('.caught-pokemon-grid');
+
+//   if (showingCaughtPokemon) {
+//     // Restores the original grid content
+//     pokemonGrid.innerHTML = originalPokemonGridHTML;
+//     pokemonGrid.style.display = 'grid';
+//     if (caughtPokemonGrid) caughtPokemonGrid.remove();
+//     showingCaughtPokemon = false;
+//   } else {
+//     // Saves the current pokemonGrid HTML only the first time the button is clicked
+//     if (!originalPokemonGridHTML) {
+//       originalPokemonGridHTML = pokemonGrid.innerHTML;
+//     }
+
+//     // Hides the current pokemonGrid
+//     pokemonGrid.style.display = 'none';
+
+//     // Creates a new pokemonGrid with only the caught pokemons
+//     caughtPokemonGrid = document.createElement('div');
+//     caughtPokemonGrid.classList.add('cs-card-group', 'caught-pokemon-grid');
+
+//     // Loops through the caughtPokemon array and create a new pokemon card for each one
+//     caughtPokemon.forEach((pokemon) => {
+//       const pokemonCard = document.createElement('li');
+//       pokemonCard.classList.add('cs-item', 'caught-pokemon');
+
+//       // Adds the pokemon name and image to the card
+//       const pokemonName = document.createElement('h3');
+//       pokemonName.classList.add('cs-h3');
+//       pokemonName.textContent = pokemon.name;
+//       pokemonCard.appendChild(pokemonName);
+
+//       const pokemonImage = document.createElement('img');
+//       pokemonImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+//       pokemonCard.appendChild(pokemonImage);
+
+//       caughtPokemonGrid.appendChild(pokemonCard);
+//     });
+
+//     // Adds the new pokemonGrid to the page
+//     document.querySelector('.cs-container').appendChild(caughtPokemonGrid);
+
+//     // Shows the caught pokemon grid
+//     caughtPokemonGrid.style.display = 'grid';
+//     showingCaughtPokemon = true;
+//   }
+// });
+
+// function switchUI() {
+//   const pokemonToggleGrid = document.getElementById('pokemonGrid');
+//   if (pokemonToggleGrid.style.visibility === 'visible') {
+//     pokemonToggleGrid.style.visibility = 'hidden';
+//   }
+
+//   }
 
 
 });

@@ -65,8 +65,13 @@
 		transition: .3s ease;
 	}
 
-	#header .caughtPokemonUi:hover, .caughtPokemonUi:focus, .caughtPokemonUiActive {
+	#header .caughtPokemonUi:hover {
 		outline: none;
+		background-color: var(--primary);
+		color: #fff;
+		box-shadow: 0 0 10px var(--primary);
+	}
+	#header .buttonActive {
 		background-color: var(--primary);
 		color: #fff;
 		box-shadow: 0 0 10px var(--primary);
@@ -90,6 +95,8 @@
 @media only screen and (min-width: 0rem) {
 	#pokemonGrid {
 		padding: var(--sectionPadding);
+		visibility: visible;
+		transition: visibility 0.3s ease;
 	}
 	#pokemonGrid .cs-container {
 		width: 100%;
