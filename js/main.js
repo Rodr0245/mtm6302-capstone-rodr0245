@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // === Variables ===
   const pokemonGrid = document.querySelector('.cs-card-group');
   const loadMore = document.querySelector('#loadMore');
+  const catchReleaseBtn = document.querySelector('.catch-btn');
 
+  
   
   // Fetch and populate the type icons from pokeAPI (Feature does not work 100% yet, may fix later on in the future)
   // const typeIcons = {
@@ -290,12 +292,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (isCaught) {
       releasePokemon(pokemonInfo, buttonElement);
+      catchReleaseBtn.classList.remove('buttonActive');
     } else {
       const capitalizedName = pokemonInfo.name.charAt(0).toUpperCase() + pokemonInfo.name.slice(1);
       showNotification(`You've caught ${capitalizedName}, Keep going!`);
       buttonElement.textContent = 'Release';
       caughtPokemon.push({ id: pokemonInfo.id, name: pokemonInfo.name });
       saveCaughtPokemon();
+      catchReleaseBtn.classList.add('buttonActive');
     }
     console.log(caughtPokemon);
   }
@@ -316,9 +320,15 @@ document.addEventListener('DOMContentLoaded', function() {
   function saveCaughtPokemon() {
   const caughtPokemonData = caughtPokemon.map(pokemon => ({
     id: pokemon.id,
-    name: pokemon.name
+    name: pokemon.name,
+    type: pokemon.type
+  }));
+  const caughtPokemonButtonStates = Array.from(document.querySelectorAll('.catch-btn')).map(button => ({
+    id: button.id,
+    isActive: button.classList.contains('buttonActive')
   }));
   localStorage.setItem('caughtPokemon', JSON.stringify(caughtPokemonData));
+  localStorage.setItem('caughtPokemonButtonStates', JSON.stringify(caughtPokemonButtonStates));
   }
   // Loads caught Pokémon from localStorage
   loadCaughtPokemon();
@@ -328,10 +338,33 @@ document.addEventListener('DOMContentLoaded', function() {
       const caughtPokemonData = JSON.parse(storedCaughtPokemon);
       caughtPokemon = caughtPokemonData.map(pokemon => ({
         id: pokemon.id,
-        name: pokemon.name
+        name: pokemon.name,
+        type: pokemon.type
       }));
     }
   }
+// Function to load button states from localStorage
+  function loadButtonStates() {
+    setTimeout(function() {
+      const caughtPokemonButtonStates = JSON.parse(localStorage.getItem('caughtPokemonButtonStates'));
+      if (caughtPokemonButtonStates) {
+        const buttons = document.querySelectorAll('.catch-btn');
+        caughtPokemonButtonStates.forEach(buttonState => {
+          const button = Array.from(buttons).find(button => button.id === buttonState.id);
+          if (button) {
+            if (buttonState.isActive) {
+              button.classList.add('buttonActive');
+            } else {
+              button.classList.remove('buttonActive');
+            }
+          }
+        });
+      }
+    }, 500); // 500ms delay
+  }
+  loadButtonStates();
+
+
 
   // Function to show notification on catch/release
   let notificationTimeout;
@@ -363,84 +396,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+// Creates a new pokemonGrid with only the caught pokemon
+function createCaughtPokemonUi () {
+  console.log('New UI Active');
+  const caughtPokemonGrid = document.createElement('div');
+  caughtPokemonGrid.classList.add('cs-card-group', 'caught-pokemon-grid');
 
+  caughtPokemon.forEach((pokemon) => {
+    const pokemonCard = document.createElement('li');
+    pokemonCard.classList.add('cs-item', 'caught-pokemon');
+
+    const pokemonName = document.createElement('h3');
+    pokemonName.classList.add('cs-h3');
+    pokemonName.textContent = pokemon.name;
+    pokemonCard.appendChild(pokemonName);
+
+    const pokemonImage = document.createElement('img');
+    pokemonImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+    pokemonImage.classList.add('cs-picture');
+    pokemonCard.appendChild(pokemonImage);
+
+    caughtPokemonGrid.appendChild(pokemonCard);
+  });
+
+  document.querySelector('.cs-container').appendChild(caughtPokemonGrid);
+  caughtPokemonGrid.style.display = 'grid';
+  
+  
+}
 
   // Gets the button with class caughtPokemonUi
 const caughtPokemonButton = document.querySelector('.caughtPokemonUi');
 
 // event listener for the button
-caughtPokemonButton.addEventListener('click', () => {
-  const pokemonToggleGrid = document.getElementById('pokemonGrid');
-  if (pokemonToggleGrid.style.visibility !== 'hidden') {
-    pokemonToggleGrid.style.visibility = 'hidden';
-    caughtPokemonButton.classList.add('buttonActive');
-  } else {
-    pokemonToggleGrid.style.visibility = 'visible';
-    caughtPokemonButton.classList.remove('buttonActive');
-  }
-});
-
-
-// let showingCaughtPokemon = false;
-// let originalPokemonGridHTML;
-
-// caughtPokemonButton.addEventListener('click', () => {
-//   const pokemonGrid = document.querySelector('.cs-card-group');
-//   let caughtPokemonGrid = document.querySelector('.caught-pokemon-grid');
-
-//   if (showingCaughtPokemon) {
-//     // Restores the original grid content
-//     pokemonGrid.innerHTML = originalPokemonGridHTML;
-//     pokemonGrid.style.display = 'grid';
-//     if (caughtPokemonGrid) caughtPokemonGrid.remove();
-//     showingCaughtPokemon = false;
-//   } else {
-//     // Saves the current pokemonGrid HTML only the first time the button is clicked
-//     if (!originalPokemonGridHTML) {
-//       originalPokemonGridHTML = pokemonGrid.innerHTML;
-//     }
-
-//     // Hides the current pokemonGrid
-//     pokemonGrid.style.display = 'none';
-
-//     // Creates a new pokemonGrid with only the caught pokemons
-//     caughtPokemonGrid = document.createElement('div');
-//     caughtPokemonGrid.classList.add('cs-card-group', 'caught-pokemon-grid');
-
-//     // Loops through the caughtPokemon array and create a new pokemon card for each one
-//     caughtPokemon.forEach((pokemon) => {
-//       const pokemonCard = document.createElement('li');
-//       pokemonCard.classList.add('cs-item', 'caught-pokemon');
-
-//       // Adds the pokemon name and image to the card
-//       const pokemonName = document.createElement('h3');
-//       pokemonName.classList.add('cs-h3');
-//       pokemonName.textContent = pokemon.name;
-//       pokemonCard.appendChild(pokemonName);
-
-//       const pokemonImage = document.createElement('img');
-//       pokemonImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
-//       pokemonCard.appendChild(pokemonImage);
-
-//       caughtPokemonGrid.appendChild(pokemonCard);
-//     });
-
-//     // Adds the new pokemonGrid to the page
-//     document.querySelector('.cs-container').appendChild(caughtPokemonGrid);
-
-//     // Shows the caught pokemon grid
-//     caughtPokemonGrid.style.display = 'grid';
-//     showingCaughtPokemon = true;
-//   }
-// });
-
-// function switchUI() {
-//   const pokemonToggleGrid = document.getElementById('pokemonGrid');
-//   if (pokemonToggleGrid.style.visibility === 'visible') {
-//     pokemonToggleGrid.style.visibility = 'hidden';
-//   }
-
-//   }
-
-
+  caughtPokemonButton.addEventListener('click', () => {
+    caughtPokemonButton.classList.toggle('buttonActive');
+    const pokemonToggleGrid = document.getElementById('pokemonGrid');
+    if (pokemonToggleGrid.style.display === 'none') {
+      pokemonToggleGrid.style.display = 'block';
+      document.querySelector('.caught-pokemon-grid').remove();
+    } else {
+      pokemonToggleGrid.style.display = 'none';
+      createCaughtPokemonUi();
+    }
+  });
 });
